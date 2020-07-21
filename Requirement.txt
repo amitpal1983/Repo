@@ -1,0 +1,56 @@
+Hi  Amit,
+
+As discussed for Magic Software please see below coding test... This is the first round of interview.
+
+
+Create a simple Student Management System.
+Add three Entities :
+1) Student :
+    Properties : DistrictId, FirstName , LastName, DateOfBirth, Ssn
+2)Enrollment:
+    Properties: StudentId, SchoolYear, StartDate, EndDate
+3)Service:
+    Properties: StudentId, SchoolYear, StartDate, EndDate
+
+Add Three WebAPi :
+1) To GetAllStudents which can be filtered by DistrictId
+2) To GetAllStudentEnrollments by StudentId and can be filtered by SchoolYear
+3) To GetAllStudentServices by StudentId and can be filtered by SchoolYear
+
+Add the UI to pull and show data pulled from the Api's.
+Prefer the UI Grid to have date field formatted to mm//dd/yyyy.
+
+Technologies to be used:
+
+1. MVC for UI
+2. Web API and Entity Framework for Middle were
+3. SQL Server (DataBase)
+
+
+FAQ:
+
+1) What is Ssn.
+            this is just simple alphanumeric value.
+2) There is no connection between Student and Enrollment.
+             both table has student Id. Add student Id in Student table.
+3) What is DistrictId.
+          Its any numeric number from master table.
+4) Entites Enrollment and Services are same then what is the use of service.
+         Add ServiceName property in Service table.
+5) different filtering option are there must be some connection among them
+            All of them have studentid and based on that you need to fetch student data.
+
+
+You have to  upload your application on any of the tools and submit the   URL link by tomorrow (21st July'2020)
+
+
+
+Thanks
+Regards
+Shyamolima
+
+https://stackoverflow.com/questions/23429888/best-way-to-insert-data-to-multiple-table-mvc-asp
+https://www.c-sharpcorner.com/article/consume-web-api-in-asp-net-mvc-with-crud-actions/
+https://stackoverflow.com/questions/37500371/insert-data-in-another-table-through-entity-framework-mvc
+
+https://www.tutorialsteacher.com/webapi/consume-web-api-get-method-in-aspnet-mvc
