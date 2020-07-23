@@ -1,91 +1,107 @@
-﻿@model StudentMgmtSystem.Models.StudentViewModel
+@model StudentMgmtSystem.Models.StudentViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h3>Student Info:</h3>
-<div class="static">
-    <table style="border: 1px solid black;">
-        <tr>
-            <th>
-                @Html.DisplayName("DistrictId")
-            </th>
-            <th>
-                @Html.DisplayName("FirstName")
-            </th>
-            <th>
-                @Html.DisplayName("LastName")
-            </th>
-            <th>
-                @Html.DisplayName("DateOfBirth")
-            </th>
-            <th>
-                @Html.DisplayName("Ssn")
-            </th>
-        </tr>
-        @foreach (var item in Model.lstStudents)
-        {
-            <tr>
-                <td>
+<div>
+    @using (Html.BeginForm("Index", "Student", FormMethod.Post))
+    {
+        @Html.Label("DistrictId:") @Html.TextBox("DistrictIdSearch")
+        <button type="submit" name="submitButton" value="Searchstudent">Search</button>
 
-                    @Html.DisplayFor(modelItem => item.DistrictId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @String.Format("{0:MM/dd/yyyy}", (item.DateOfBirth))
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ssn)
-                </td>
-            </tr>
-        }
-    </table>
-</div>
-    <h3>Enrollment Info:</h3>
-    <div class="static">
-        <table style="border: 1px solid black;">
-            <tr>
-                <th>
-                    @Html.DisplayName("StudentId")
-                </th>
-                <th>
-                    @Html.DisplayName("SchoolYear")
-                </th>
-                <th>
-                    @Html.DisplayName("StartDate")
-                </th>
-                <th>
-                    @Html.DisplayName("EndDate")
-                </th>
-            </tr>
-            @foreach (var item in Model.lstEnrollment)
-            {
+        <br />
+        <div class="static">
+            <table style="border: 1px solid black;">
                 <tr>
-                    <td>
-
-                        @Html.DisplayFor(modelItem => item.StudentId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SchoolYear)
-                    </td>
-                    <td>
-                        @String.Format("{0:MM/dd/yyyy}", (item.StartDate))
-                    </td>
-                    <td>
-                        @String.Format("{0:MM/dd/yyyy}", (item.EndDate))
-
-                    </td>
+                    <th>
+                        @Html.DisplayName("DistrictId")
+                    </th>
+                    <th>
+                        @Html.DisplayName("FirstName")
+                    </th>
+                    <th>
+                        @Html.DisplayName("LastName")
+                    </th>
+                    <th>
+                        @Html.DisplayName("DateOfBirth")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Ssn")
+                    </th>
                 </tr>
-            }
-        </table>
-    </div>
+                @foreach (var item in Model.lstStudents)
+                {
+                    <tr>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.DistrictId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @String.Format("{0:MM/dd/yyyy}", (item.DateOfBirth))
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ssn)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <h3>Enrollment Info:</h3>
+      
+        @Html.Label("School year:") @Html.TextBox("YearSearch")
+        <button type="submit" name="submitButton" value="SearchEnrollment">Search</button>
+        <br />
+        <div class="static">
+            <table style="border: 1px solid black;">
+                <tr>
+                    <th>
+                        @Html.DisplayName("StudentId")
+                    </th>
+                    <th>
+                        @Html.DisplayName("SchoolYear")
+                    </th>
+                    <th>
+                        @Html.DisplayName("StartDate")
+                    </th>
+                    <th>
+                        @Html.DisplayName("EndDate")
+                    </th>
+                </tr>
+                @foreach (var item in Model.lstEnrollment)
+                {
+                    <tr>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.StudentId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SchoolYear)
+                        </td>
+                        <td>
+                            @String.Format("{0:MM/dd/yyyy}", (item.StartDate))
+                        </td>
+                        <td>
+                            @String.Format("{0:MM/dd/yyyy}", (item.EndDate))
+
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
         <h3>Service Info:</h3>
+   
+        @Html.Label("StudentId:") @Html.TextBox("StudentIdSearch")
+        @Html.Label("School year:") @Html.TextBox("SchoolYearSearch")
+        <button type="submit" name="submitButton" value="SearchService">Search</button>
+        <br />
         <div class="static">
             <table style="border: 1px solid black;">
                 <tr>
@@ -122,31 +138,33 @@
 
             </table>
         </div>
-            <style>
-                .static table {
-                    border-collapse: collapse;
-                    display: block;
-                    margin-bottom: 23px;
-                    overflow-x: auto;
-                    width: 50%;
-                }
+    }
+</div>
+<style>
+    .static table {
+        border-collapse: collapse;
+        display: block;
+        margin-bottom: 23px;
+        overflow-x: auto;
+        width: 50%;
+    }
 
-                    .static table tr {
-                        background-color: #E0E0E0;
-                    }
+        .static table tr {
+            background-color: #E0E0E0;
+        }
 
-                        .static table tr:nth-child(even) {
-                            background-color: #F1F1F1;
-                        }
+            .static table tr:nth-child(even) {
+                background-color: #F1F1F1;
+            }
 
-                        .static table tr:first-child td, .static table tr:first-child th {
-                            font-size: 16px;
-                            font-weight: 600;
-                            line-height: 26px;
-                            padding: 10px 16px;
-                        }
+            .static table tr:first-child td, .static table tr:first-child th {
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 26px;
+                padding: 10px 16px;
+            }
 
-                .static td {
-                    min-width: 100px;
-                }
-            </style>
+    .static td {
+        min-width: 100px;
+    }
+</style>
