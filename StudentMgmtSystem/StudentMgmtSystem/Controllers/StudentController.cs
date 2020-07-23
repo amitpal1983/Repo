@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace StudentMgmtSystem.Controllers
     public class StudentController : Controller
     {
         string Baseurl = "http://localhost:5482/";
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string submitButton, string DistrictIdSearch, string YearSearch, string StudentIdSearch, string SchoolYearSearch)
         {
             StudentViewModel studentViewModels = new StudentViewModel();
             using (var client = new HttpClient())
@@ -28,66 +28,33 @@ namespace StudentMgmtSystem.Controllers
                 {
                     var StuResponse = stuRes.Content.ReadAsStringAsync().Result;
                     studentViewModels.lstStudents = JsonConvert.DeserializeObject<List<Student>>(StuResponse);
+                    if (!string.IsNullOrEmpty(DistrictIdSearch))
+                    {
+                        studentViewModels.lstStudents = studentViewModels.lstStudents.Where(oh=>oh.DistrictId == Convert.ToInt32(DistrictIdSearch)).ToList();
+                    }                 
                 }
                 HttpResponseMessage enrRes = await client.GetAsync("api/Enrollment/Get");
                 if (enrRes.IsSuccessStatusCode)
                 {
                     var StuResponse = enrRes.Content.ReadAsStringAsync().Result;
                     studentViewModels.lstEnrollment = JsonConvert.DeserializeObject<List<Enrollment>>(StuResponse);
+                    if (!string.IsNullOrEmpty(YearSearch))
+                    {
+                        studentViewModels.lstEnrollment = studentViewModels.lstEnrollment.Where(oh => oh.SchoolYear == Convert.ToInt32(YearSearch)).ToList();
+                    }
                 }
                 HttpResponseMessage serRes = await client.GetAsync("api/Service/Get");
                 if (enrRes.IsSuccessStatusCode)
                 {
                     var StuResponse = serRes.Content.ReadAsStringAsync().Result;
                     studentViewModels.lstService = JsonConvert.DeserializeObject<List<Service>>(StuResponse);
+                    if (!string.IsNullOrEmpty(SchoolYearSearch) && !string.IsNullOrEmpty(StudentIdSearch))
+                    {
+                        studentViewModels.lstService = studentViewModels.lstService.Where(oh => oh.SchoolYear == Convert.ToInt32(SchoolYearSearch) && oh.StudentId == Convert.ToInt32(StudentIdSearch)).ToList();
+                    }
                 }
                 return View(studentViewModels);
             }
-
-
-
-            //using (var client = new HttpClient())
-            //{
-            //    client.BaseAddress = new Uri(apiBaseAddress);
-
-            //    var resStudent = client.GetAsync("Students/Get");
-
-            //    if (resStudent != null)
-            //    {
-            //        var resEnrollment = client.GetAsync("Enrollment/get");
-            //    }
-            //    //else
-            //    //{
-            //    //    employees = Enumerable.Empty<Employee>();
-            //    //    ModelState.AddModelError(string.Empty, "Server error try after some time.");
-            //    //}
-            //}
-
-            //return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,Address,Gender,Company,Designation")] StudentViewModel studentViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri(Baseurl);
-
-                    var response = await client.PostAsJsonAsync("Students/Create", studentViewModel);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Server error try after some time.");
-                    }
-                }
-            }
-            return View(studentViewModel);
         }
     }
 }
